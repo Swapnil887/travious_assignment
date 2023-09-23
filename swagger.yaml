@@ -1,0 +1,195 @@
+swagger: '2.0'
+info:
+  title: My E-commerce API
+  version: 1.0.0
+paths:
+  /product/category:
+    post:
+      summary: Add a category
+      description: Add a new category.
+      responses:
+        200:
+          description: Category added successfully.
+
+    get:
+      summary: Get all categories
+      description: Get a list of all categories.
+      responses:
+        200:
+          description: List of categories.
+
+  /product/product:
+    get:
+      summary: Get all products
+      description: Get a list of all products.
+      responses:
+        200:
+          description: List of products.
+
+    post:
+      summary: Add multiple products
+      description: Add multiple products.
+      responses:
+        200:
+          description: Products added successfully.
+
+  /product/product/{id}:
+    get:
+      summary: Get a specific product
+      description: Get details of a specific product.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Product details.
+
+  /user/register:
+    post:
+      summary: Register a user
+      description: Register a new user.
+      responses:
+        200:
+          description: User registered successfully.
+
+  /user/login:
+    post:
+      summary: Login a user
+      description: Log in an existing user.
+      responses:
+        200:
+          description: User logged in successfully.
+
+  /cart:
+    get:
+      summary: Get all products in the cart
+      description: Get a list of products in the user's cart.
+      responses:
+        200:
+          description: List of products in the cart.
+
+  /cart/add/{productid}:
+    post:
+      summary: Add a product to the cart
+      description: Add a product to the user's cart.
+      parameters:
+        - name: productid
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Product added to the cart successfully.
+
+  /cart/remove/{productid}:
+    post:
+      summary: Remove a product from the cart
+      description: Remove a product from the user's cart.
+      parameters:
+        - name: productid
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: Product removed from the cart successfully.
+
+  /order/placed:
+    post:
+      summary: Change order status
+      description: Change the status of an order.
+      responses:
+        200:
+          description: Order status changed successfully.
+
+  /order/orderdetails:
+    get:
+      summary: Get order details
+      description: Get details of orders that have been placed.
+      responses:
+        200:
+          description: List of order details.
+
+definitions:
+  Category:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+  Product:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+      price:
+        type: number
+  User:
+    type: object
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+      email:
+        type: string
+  CartItem:
+    type: object
+    properties:
+      id:
+        type: string
+      productId:
+        type: string
+      quantity:
+        type: integer
+  Order:
+    type: object
+    properties:
+      id:
+        type: string
+      status:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/CartItem'
+
+responses:
+  NotFound:
+    description: Resource not found
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+
+  BadRequest:
+    description: Bad request
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+
+  Unauthorized:
+    description: Unauthorized
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+
+  InternalServerError:
+    description: Internal server error
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
